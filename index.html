@@ -279,6 +279,19 @@
       50% { transform: translateY(-10px) rotate(5deg); }
     }
     
+    /* Floating animation */
+    .floating {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 4s linear forwards;
+      opacity: 0.7;
+    }
+    
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100px) rotate(20deg); opacity: 0; }
+    }
+    
     /* Responsive adjustments */
     @media (max-width: 768px) {
       h1 { font-size: 2.2rem; }
@@ -293,17 +306,17 @@
 <body>
   <div class="container">
     <header>
-      <h1>Hi Habibie Fauzan!</h1>
-      <div class="message">Thank you for always listening to my stories.</div>
-      <div class="message">I'm sorry for the times I've been too much.</div>
-      <div class="message">I appreciate you more than words can say.</div>
+      <h1>Hi Habibie!</h1>
+      <div class="message">Wishing you fair winds and following seas</div>
+      <div class="message">Your ambition and dedication are truly admirable</div>
+      <div class="message">May success be your constant companion</div>
       
       <a href="#game" class="btn">Play Ocean Quest</a>
       <a href="#music" class="btn">Listen to Music</a>
     </header>
     
     <section id="game">
-      <h2>Habibie's Ocean Quest</h2>
+      <h2>Habibie's Ocean Adventure</h2>
       <p>Click on the sea creatures to collect them before time runs out!</p>
       
       <div class="game-container">
@@ -320,18 +333,19 @@
     </section>
     
     <div class="paper-note">
-      <p>Thanks for taking the time to experience this, it means a lot.</p>
-      <p>Thank you for sharing this moment with me. I truly appreciate you for being part of my journey, and your presence means more than words can express.</p>
-      <p>Every experience, every step, and every memory we create holds a special place in my heart. I hope this moment stays with you, just as you will always stay with me, in a way that feels as sweet and lasting as this journey we've shared.</p>
+      <p>Dear Habibie,</p>
+      <p>Just wanted to send you these positive thoughts as you navigate through your busy life.</p>
+      <p>I've always respected your determination and focus. May all your efforts lead you to the success you're working so hard for.</p>
+      <p>Wishing you calm waters and clear horizons ahead.</p>
       <div class="signature">Silviaa</div>
     </div>
     
     <div class="final-message">
-      May our friendship continue to grow like the endless ocean, with waves of laughter and depths of understanding.
+      May your journey be filled with favorable tides and your compass always point toward happiness
     </div>
     
     <footer>
-      With love Silviaa 💖👑
+      Best wishes, Silviaa ⚓
     </footer>
   </div>
 
@@ -346,10 +360,11 @@
     const gameContainer = document.querySelector('.game-container');
     const timerElement = document.getElementById('timer');
     const scoreElement = document.getElementById('score');
+    const header = document.querySelector('header');
     
     // Add decorative stickers to paper note
     const paperNote = document.querySelector('.paper-note');
-    const stickers = ['✨', '🌊', '💖', '🐚', '🌟', '🦋'];
+    const stickers = ['✨', '🌊', '⚓', '🐚', '🌟', '🌙'];
     
     stickers.forEach((sticker, index) => {
       const stickerEl = document.createElement('div');
@@ -359,6 +374,24 @@
       stickerEl.style.bottom = `${5 + (index % 3 * 10)}%`;
       stickerEl.style.animationDelay = `${index * 0.5}s`;
       paperNote.appendChild(stickerEl);
+    });
+    
+    // Floating element animation for header
+    header.addEventListener('click', (e) => {
+      if (e.target === header || e.target.tagName === 'H1' || e.target.classList.contains('message')) {
+        const floatElement = document.createElement('div');
+        floatElement.classList.add('floating');
+        const symbols = ['⚓', '🌊', '✨', '🐚', '🌟'];
+        floatElement.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        floatElement.style.left = `${e.clientX - 20}px`;
+        floatElement.style.top = `${e.clientY - 20}px`;
+        floatElement.style.fontSize = `${20 + Math.random() * 30}px`;
+        document.body.appendChild(floatElement);
+        
+        setTimeout(() => {
+          floatElement.remove();
+        }, 4000);
+      }
     });
     
     // Start Game when game section is in view
