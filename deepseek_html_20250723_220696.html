@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Nurfaiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ocean-blue: #4ca3c2;
+      --light-sea: #7f9bbd;
+      --golden-yellow: #f9b207;
+      --crimson-red: #dc143c;
+      --white: #ffffff;
+      --light-gray: #f0f0f0;
+      --paper-tan: #fff9e6;
+      --paper-border: #e8d8b5;
+    }
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--light-sea);
+      color: var(--white);
+      transition: background-color 0.5s ease;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 0%, transparent 20%);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    header {
+      padding: 40px 0;
+    }
+    
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+    
+    .message {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 0.5s;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: var(--golden-yellow);
+      color: #333;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      margin: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 1s;
+    }
+    
+    .btn:hover {
+      background-color: var(--crimson-red);
+      color: var(--white);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .game-container {
+      width: 90%;
+      height: 500px;
+      background: var(--ocean-blue);
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 40px auto;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 1.5s;
+      background-image: linear-gradient(to bottom, #4ca3c2, #6bb7d1);
+    }
+    
+    .item {
+      position: absolute;
+      font-size: 40px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      user-select: none;
+      filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+    }
+    
+    #timer {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      z-index: 10;
+      background: rgba(0,0,0,0.3);
+      padding: 5px 10px;
+      border-radius: 20px;
+      color: white;
+    }
+    
+    #score {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      z-index: 10;
+      background: rgba(0,0,0,0.3);
+      padding: 5px 10px;
+      border-radius: 20px;
+      color: white;
+    }
+    
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg') repeat-x;
+      background-size: 1000px 100px;
+      animation: wave 15s linear infinite;
+      opacity: 0.6;
+    }
+    
+    .wave:nth-child(2) {
+      animation: wave 10s linear -5s infinite;
+      opacity: 0.4;
+      bottom: 10px;
+    }
+    
+    .wave:nth-child(3) {
+      animation: wave 20s linear -2s infinite;
+      opacity: 0.2;
+      bottom: 15px;
+    }
+    
+    .spotify-container {
+      margin: 40px auto;
+      max-width: 300px;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 2s;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .paper-note {
+      background: var(--paper-tan);
+      color: #5a4a42;
+      padding: 40px;
+      margin: 60px auto;
+      max-width: 700px;
+      border-radius: 5px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      opacity: 0;
+      animation: fadeIn 2s ease forwards 2.5s;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      line-height: 1.6;
+      text-align: left;
+      border: 1px solid var(--paper-border);
+      transform-style: preserve-3d;
+      transform: perspective(1000px) rotateY(-5deg);
+    }
+    
+    .paper-note::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+      pointer-events: none;
+      border-radius: 5px;
+    }
+    
+    .paper-note::after {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 1px solid var(--paper-border);
+      border-radius: 2px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    
+    .paper-note p {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .paper-note p:first-child::first-letter {
+      font-size: 3rem;
+      color: var(--golden-yellow);
+      float: left;
+      margin-right: 10px;
+      line-height: 0.8;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+    }
+    
+    .paper-note .signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      text-align: right;
+      margin-top: 30px;
+      color: var(--crimson-red);
+    }
+    
+    .final-message {
+      font-size: 1.5rem;
+      color: var(--golden-yellow);
+      margin: 40px 0;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards 3.5s;
+      font-weight: 300;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 4s;
+      font-size: 1.2rem;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes wave {
+      0% { background-position-x: 0; }
+      100% { background-position-x: 1000px; }
+    }
+    
+    /* Sticker elements */
+    .sticker {
+      position: absolute;
+      font-size: 30px;
+      opacity: 0.8;
+      z-index: 5;
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; }
+      .message { font-size: 1.2rem; }
+      .game-container { height: 400px; }
+      .paper-note { font-size: 1.4rem; padding: 25px; }
+      .paper-note p:first-child::first-letter { font-size: 2.2rem; }
+      .final-message { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Hi Nurfaiz!</h1>
+      <div class="message">Thank you for always listening to my stories.</div>
+      <div class="message">I'm sorry for the times I've been too much.</div>
+      <div class="message">I appreciate you more than words can say.</div>
+      
+      <a href="#game" class="btn">Play Ocean Quest</a>
+      <a href="#music" class="btn">Listen to Music</a>
+    </header>
+    
+    <section id="game">
+      <h2>Nurfaiz's Ocean Quest</h2>
+      <p>Click on the sea creatures to collect them before time runs out!</p>
+      
+      <div class="game-container">
+        <div id="timer">Time: 30</div>
+        <div id="score">Score: 0</div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+      </div>
+    </section>
+    
+    <section id="music" class="spotify-container">
+      <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX1WSnLRtI26o" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    </section>
+    
+    <div class="paper-note">
+      <p>Thanks for taking the time to experience this, it means a lot.</p>
+      <p>Thank you for sharing this moment with me. I truly appreciate you for being part of my journey, and your presence means more than words can express.</p>
+      <p>Every experience, every step, and every memory we create holds a special place in my heart. I hope this moment stays with you, just as you will always stay with me, in a way that feels as sweet and lasting as this journey we've shared.</p>
+      <div class="signature">Silviaa</div>
+    </div>
+    
+    <div class="final-message">
+      May our friendship continue to grow like the endless ocean, with waves of laughter and depths of understanding.
+    </div>
+    
+    <footer>
+      With love Silviaa 💖👑
+    </footer>
+  </div>
+
+  <script>
+    // Game variables
+    let score = 0;
+    let timeLeft = 30;
+    let gameInterval;
+    let itemInterval;
+    const items = ['🐚', '🐠', '🐡', '🦀', '🌟', '🦑', '🐙', '🦪'];
+    
+    const gameContainer = document.querySelector('.game-container');
+    const timerElement = document.getElementById('timer');
+    const scoreElement = document.getElementById('score');
+    
+    // Add decorative stickers to paper note
+    const paperNote = document.querySelector('.paper-note');
+    const stickers = ['✨', '🌊', '💖', '🐚', '🌟', '🦋'];
+    
+    stickers.forEach((sticker, index) => {
+      const stickerEl = document.createElement('div');
+      stickerEl.classList.add('sticker');
+      stickerEl.innerHTML = sticker;
+      stickerEl.style.left = `${10 + (index * 15)}%`;
+      stickerEl.style.bottom = `${5 + (index % 3 * 10)}%`;
+      stickerEl.style.animationDelay = `${index * 0.5}s`;
+      paperNote.appendChild(stickerEl);
+    });
+    
+    // Start Game when game section is in view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startGame();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    
+    observer.observe(document.querySelector('#game'));
+    
+    // Start Game
+    function startGame() {
+      // Reset game if already running
+      if (gameInterval) {
+        clearInterval(gameInterval);
+        clearInterval(itemInterval);
+        gameContainer.querySelectorAll('.item').forEach(item => item.remove());
+        score = 0;
+        timeLeft = 30;
+        scoreElement.innerText = `Score: ${score}`;
+        timerElement.innerText = `Time: ${timeLeft}`;
+      }
+      
+      gameInterval = setInterval(updateTime, 1000);
+      itemInterval = setInterval(generateItem, 1000);
+    }
+    
+    // Update Timer
+    function updateTime() {
+      timeLeft--;
+      timerElement.innerText = `Time: ${timeLeft}`;
+      if (timeLeft <= 0) {
+        clearInterval(gameInterval);
+        clearInterval(itemInterval);
+        
+        // Create a final score message
+        const finalScore = document.createElement('div');
+        finalScore.style.position = 'absolute';
+        finalScore.style.top = '50%';
+        finalScore.style.left = '50%';
+        finalScore.style.transform = 'translate(-50%, -50%)';
+        finalScore.style.fontSize = '2rem';
+        finalScore.style.fontWeight = 'bold';
+        finalScore.style.color = 'white';
+        finalScore.style.textAlign = 'center';
+        finalScore.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        finalScore.style.padding = '20px';
+        finalScore.style.borderRadius = '10px';
+        finalScore.style.zIndex = '100';
+        finalScore.innerHTML = `Game Over!<br>Your Score: ${score}<br><br>
+          <button onclick="startGame()" style="
+            padding: 10px 20px;
+            background: var(--golden-yellow);
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+          " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 15px rgba(249, 178, 7, 0.7)'" 
+          onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">Play Again</button>`;
+        
+        gameContainer.appendChild(finalScore);
+      }
+    }
+    
+    // Generate Item
+    function generateItem() {
+      const item = document.createElement('div');
+      item.classList.add('item');
+      item.innerText = items[Math.floor(Math.random() * items.length)];
+      
+      // Random position (not too close to edges)
+      const posX = 5 + Math.random() * 80;
+      const posY = 5 + Math.random() * 80;
+      
+      item.style.left = `${posX}%`;
+      item.style.top = `${posY}%`;
+      
+      // Random slight rotation
+      const rotation = -15 + Math.random() * 30;
+      item.style.transform = `rotate(${rotation}deg)`;
+      
+      // Click handler
+      item.onclick = () => {
+        score++;
+        scoreElement.innerText = `Score: ${score}`;
+        
+        // Add collection animation
+        item.style.transition = 'all 0.3s ease';
+        item.style.transform = `rotate(${rotation}deg) scale(1.5)`;
+        item.style.opacity = '0';
+        
+        setTimeout(() => {
+          item.remove();
+        }, 300);
+      };
+      
+      // Remove item after 5 seconds if not clicked
+      setTimeout(() => {
+        if (item.parentNode) {
+          item.style.transition = 'opacity 0.5s ease';
+          item.style.opacity = '0';
+          setTimeout(() => {
+            if (item.parentNode) item.remove();
+          }, 500);
+        }
+      }, 5000);
+      
+      gameContainer.appendChild(item);
+    }
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
